@@ -1,12 +1,32 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { login, reset } from '../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { user, isError, isSuccess, message , isLoading } = useSelector((state) => state.authReducer)
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+        }
+
+        if (isSuccess || user) {
+            navigate('/');
+        }
+        dispatch(reset())
+    }, [isSuccess, navigate, dispatch, user, isError, message])
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     })
+
     const { email, password } = formData
     const handleChange = (e) => {
         setFormData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
@@ -14,11 +34,14 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(email === '' || password === ''){ 
-                toast.error('')
+        if (email === '' || password === '') {
+            toast.error('email and passwrod required');
+            return
         }
+        const userInfo = { email, password }
+        dispatch(login(userInfo))
     }
-
+    if(isLoading) return <Loader />
     return (
         <Fragment>
             <section className='heading'>

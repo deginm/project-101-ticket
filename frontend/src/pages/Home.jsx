@@ -1,8 +1,9 @@
-import { FaQuestion, FaQuestionCircle, FaTicketAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { FaQuestion, FaQuestionCircle, FaTicketAlt, } from 'react-icons/fa'
 
 function Home() {
-    return <>
+
+    return (<>
         <section className="heading">
             <h1>What do you need help with ?</h1>
             <p>Please choose from an option below</p>
@@ -13,7 +14,7 @@ function Home() {
         <Link to='/ticket' className='btn btn-block'>
             <FaTicketAlt /> View My Tickets
         </Link>
-    </>
+    </>)
 }
 
 export default Home

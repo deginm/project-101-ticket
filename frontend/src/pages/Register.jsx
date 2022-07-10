@@ -1,7 +1,28 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { FaUser } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { register, reset } from '../features/auth/authSlice';
+import Loader from '../components/Loader';
+
 function Register() {
+    // globle state (redux)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { user, isSuccess, isError,isLoading, message } = useSelector((state) => state.authReducer);
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+        }
+        if (isSuccess || user) {
+            navigate('/');
+        }
+        dispatch(reset())
+    }, [navigate, dispatch, isError, message, user, isSuccess])
+
+    // local state for register form
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -9,6 +30,7 @@ function Register() {
         confirmPwd: '',
     })
     const { name, email, password, confirmPwd } = formData
+
     const handleChange = (e) => {
         setFormData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
     }
@@ -19,9 +41,10 @@ function Register() {
             toast.error('Pasword do not match');
             return
         }
-        
+        const userInfo = { name, email, password };
+        dispatch(register(userInfo))
     }
-
+    if(isLoading) return <Loader />
     return (
         <Fragment>
             <section className='heading'>
