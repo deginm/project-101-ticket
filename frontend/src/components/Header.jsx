@@ -6,7 +6,7 @@ import {logout , reset } from '../features/auth/authSlice'
 function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { user } = useSelector((state) => state.authReducer);
+    const { user } = useSelector((state) => state.auth);
 
     const handleClick = () => { 
         dispatch(logout());

@@ -15,6 +15,7 @@ const getErrorMessage = (error) => {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
     return message
 }
+
 // Register new user
 export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     try {

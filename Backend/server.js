@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const colors = require('colors')
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoute');
+const ticketRoute = require('./routes/ticketRoutes');
 const { errorHandler } = require('./middleware/errorHandler');
 
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({
 }))
 // routers
 app.use('/api/user', userRoutes)
+app.use('/api/ticket', ticketRoute)
 app.use(errorHandler);
 
 app.listen(PORT, () => {

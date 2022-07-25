@@ -10,7 +10,7 @@ function Register() {
     // globle state (redux)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { user, isSuccess, isError,isLoading, message } = useSelector((state) => state.authReducer);
+    const { user, isSuccess, isError,isLoading, message } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (isError) {

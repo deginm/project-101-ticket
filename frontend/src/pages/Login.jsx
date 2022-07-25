@@ -10,7 +10,7 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { user, isError, isSuccess, message , isLoading } = useSelector((state) => state.authReducer)
+    const { user, isError, isSuccess, message , isLoading } = useSelector((state) => state.auth)
     useEffect(() => {
         if (isError) {
             toast.error(message);
